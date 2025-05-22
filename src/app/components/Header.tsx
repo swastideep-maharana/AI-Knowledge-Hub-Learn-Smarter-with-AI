@@ -1,12 +1,32 @@
-// src/app/components/Header.tsx
 "use client";
 
 import Link from "next/link";
 import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const [isDark, setIsDark] = useState(false);
+
+  // Sync dark mode state with localStorage & html class
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+
+  // Initialize from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") setIsDark(true);
+  }, []);
+
   return (
-    <header className="flex justify-between items-center px-6 py-4 shadow-lg sticky top-0 z-50 border-b border-gray-700">
+    <header className="flex justify-between items-center px-6 py-4 shadow-lg sticky top-0 z-50 border-b border-gray-700 bg-gray-900 dark:bg-black">
       <nav className="flex gap-6 text-gray-300 font-medium">
         {[
           { href: "/", label: "Home" },
@@ -27,6 +47,15 @@ export default function Header() {
       </nav>
 
       <div className="flex items-center gap-4">
+        {/* Dark Mode Toggle Button */}
+        <button
+          onClick={() => setIsDark(!isDark)}
+          aria-label="Toggle Dark Mode"
+          className="bg-gray-700 dark:bg-gray-300 text-white dark:text-black rounded px-3 py-1 font-semibold hover:bg-gray-600 dark:hover:bg-gray-400 transition"
+        >
+          {isDark ? "Light Mode" : "Dark Mode"}
+        </button>
+
         <SignedIn>
           <UserButton
             appearance={{
