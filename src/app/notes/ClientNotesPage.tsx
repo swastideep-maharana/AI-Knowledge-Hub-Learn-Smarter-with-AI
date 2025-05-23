@@ -1,7 +1,10 @@
+// Updated NotesPage with Gemini-powered Chatbot integration
+
 "use client";
 
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
+import Chatbot from "../components/Chatbot"; // Import the chatbot component
 
 interface Note {
   _id: string;
@@ -133,7 +136,7 @@ export default function NotesPage() {
   }
 
   return (
-    <main className="p-8 max-w-3xl mx-auto text-white">
+    <main className="p-8 max-w-3xl mx-auto text-white relative">
       <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-400">
         📝 Your Notes
       </h1>
@@ -241,6 +244,8 @@ export default function NotesPage() {
           </div>
         ))}
       </div>
+
+      <Chatbot />
     </main>
   );
 }

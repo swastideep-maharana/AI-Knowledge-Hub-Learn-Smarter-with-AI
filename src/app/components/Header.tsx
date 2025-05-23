@@ -32,6 +32,7 @@ export default function Header() {
           { href: "/", label: "Home" },
           { href: "/topic", label: "Topic" },
           { href: "/notes", label: "Notes" },
+          { href: "/roadmaps", label: "Roadmaps" },
           { href: "/profile", label: "Profile" },
           { href: "/about", label: "About" },
         ].map(({ href, label }) => (
